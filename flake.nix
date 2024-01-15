@@ -10,27 +10,35 @@
     };
   };
 
-  outputs = {self, nixpkgs, home-manager, ...} @ inputs: 
+  outputs = {self, ...} @ inputs:
     let
       cfg = {
         system = "x86_64-linux";
+        config = {
+          allowUnfree = true;
+        };
       };
+      pkgs = import inputs.nixpkgs cfg;
+      extraArgs = {
+        inherit pkgs;
+      };
+      defaultModules = [
+        ./common/default.nix
+        inputs.home-manager.nixosModules.home-manager
+        { home-manager = { extraSpecialArgs = extraArgs; }; }
+      ];
     in
     {
       nixosConfigurations = {
-        "default" = nixpkgs.lib.nixosSystem {
+        "default" = inputs.nixpkgs.lib.nixosSystem {
           system = cfg.system;
-          specialArgs = inputs;
-          modules = [
-            ./common/default.nix
-            inputs.home-manager.nixosModules.home-manager
-          ];
+          specialArgs = extraArgs;
+          modules = defaultModules;
         };
-        "java" = nixpkgs.lib.nixosSystem {
+        "java" = inputs.nixpkgs.lib.nixosSystem {
           system = cfg.system;
-          specialArgs = inputs;
-          modules = [
-            ./common/default.nix
+          specialArgs = extraArgs;
+          modules = defaultModules ++ [
             ./env/java/default.nix
           ];
         };

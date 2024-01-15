@@ -1,10 +1,9 @@
 { config, pkgs, ... }:
  
 {
-  imports =
-    [
-      ../hardware-configuration.nix
-    ];
+  imports = [
+    "/etc/nixos/hardware-configuration.nix"
+  ];
   
   home-manager.users.guest = import ./home/guest;
   home-manager.useGlobalPkgs = true;
