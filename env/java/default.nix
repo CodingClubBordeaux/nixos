@@ -2,7 +2,7 @@
  
 {
   environment.systemPackages = with pkgs; [
-    javac
+    zulu8
     maven
   ];
 }
