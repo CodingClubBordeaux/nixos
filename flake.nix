@@ -22,26 +22,25 @@
       extraArgs = {
         inherit pkgs;
       };
-      defaultModules = [
-        ./common/default.nix
-        inputs.home-manager.nixosModules.home-manager
-        { home-manager = { extraSpecialArgs = extraArgs; }; }
-      ];
+
+      defaultConfig = inputs.nixpkgs.lib.nixosSystem {
+        system = cfg.system;
+        specialArgs = extraArgs;
+        modules = [
+          ./common/default.nix
+          inputs.home-manager.nixosModules.home-manager
+          { home-manager = { extraSpecialArgs = extraArgs; }; }
+        ];
+      };
     in
     {
       nixosConfigurations = {
-        "default" = inputs.nixpkgs.lib.nixosSystem {
-          system = cfg.system;
-          specialArgs = extraArgs;
-          modules = defaultModules;
-        };
-        "java" = inputs.nixpkgs.lib.nixosSystem {
-          system = cfg.system;
-          specialArgs = extraArgs;
-          modules = defaultModules ++ [
+        "default" = defaultConfig;
+        "java" = (defaultConfig // {
+          modules = defaultConfig.modules ++ [
             ./env/java/default.nix
           ];
-        };
+        });
       };
     };
 }
