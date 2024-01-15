@@ -16,8 +16,7 @@
         system = "x86_64-linux";
         specialArgs = inputs;
         modules = [
-          ./hardware-configuration.nix
-          ./default/default.nix
+          ./default.nix
         ];
       };
     };
