@@ -10,9 +10,9 @@
     };
   };
 
-  outputs = {self, nixpkgs, ...} @ inputs:
+  outputs = {self, nixpkgs, ...} @ inputs: {
     nixosConfiguration = {
-      "default" = nixpkgs.lib.nixosSystem {
+      default = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = inputs;
         modules = [
@@ -20,4 +20,5 @@
         ];
       };
     };
+  };
 }
