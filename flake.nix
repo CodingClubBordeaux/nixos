@@ -23,6 +23,8 @@
           specialArgs = inputs;
           modules = [
             ./common/default.nix
+            inputs.home-manager.nixosModules.home-manager
+            { home-manager = specialArgs };
           ];
         };
         "java" = nixpkgs.lib.nixosSystem {

@@ -5,6 +5,8 @@
     [
       ../hardware-configuration.nix
     ];
+  
+  home-manager.users.guest = import ./home/guest;
  
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -54,6 +56,7 @@
   };
  
   users.users.guest = {
+    createHome = true;
     isNormalUser = true;
     initialPassword = "Epitech1!";
     description = "Coding Club Guest";
