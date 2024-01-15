@@ -10,15 +10,29 @@
     };
   };
 
-  outputs = {self, nixpkgs, home-manager, ...} @ inputs: {
-    nixosConfigurations = {
-      "default" = nixpkgs.lib.nixosSystem {
+  outputs = {self, nixpkgs, home-manager, ...} @ inputs: 
+    let
+      cgf = {
         system = "x86_64-linux";
-        specialArgs = inputs;
-        modules = [
-          ./common/default.nix
-        ];
+      };
+    in
+    {
+      nixosConfigurations = {
+        "default" = nixpkgs.lib.nixosSystem {
+          system = cfg.system;
+          specialArgs = inputs;
+          modules = [
+            ./common/default.nix
+          ];
+        };
+        "java" = nixpkgs.lib.nixosSystem {
+          system = cfg.system;
+          specialArgs = inputs;
+          modules = [
+            ./common/default.nix
+            ./env/java/default.nix
+          ];
+        };
       };
     };
-  };
 }
