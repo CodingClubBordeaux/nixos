@@ -74,7 +74,6 @@
     tree
     wget
     curl
-    neofetch
   ];
  
   # This value determines the NixOS release from which the default

@@ -3,6 +3,9 @@ let
   username = "guest";
 in
 {
+  imports = [
+    ./vscode.nix
+  ];
   programs.home-manager.enable = true;
 
   home = {
@@ -12,7 +15,7 @@ in
     stateVersion = "23.11";
 
     packages = with pkgs; [
-      vscode
+      neofetch
     ];
   };
 }
