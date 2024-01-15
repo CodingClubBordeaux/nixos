@@ -12,7 +12,7 @@
 
   outputs = {self, nixpkgs, home-manager, ...} @ inputs: 
     let
-      cgf = {
+      cfg = {
         system = "x86_64-linux";
       };
     in
