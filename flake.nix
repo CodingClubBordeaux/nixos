@@ -14,15 +14,9 @@
     let
       cfg = {
         system = "x86_64-linux";
-        config = {
-          allowUnfree = true;
-        };
       };
-      pkgs = import inputs.nixpkgs cfg;
     in
     {
-      formatter.${cfg.system} = pkgs.nixpkgs-fmt;
-
       nixosConfigurations = {
         "default" = nixpkgs.lib.nixosSystem {
           system = cfg.system;
