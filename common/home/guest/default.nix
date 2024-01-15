@@ -18,4 +18,13 @@ in
       neofetch
     ];
   };
+
+  dconf.settings = {
+    "org/gnome/desktop/background" = {
+      "picture-uri" = "file://" + ../../../assets/wallpaper.jpg;
+    };
+    "org/gnome/desktop/screensaver" = {
+      "picture-uri" = "file://" + ../../../assets/wallpaper.jpg;
+    };
+  };
 }
