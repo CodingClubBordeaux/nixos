@@ -5,6 +5,7 @@ in
 {
   imports = [
     ./vscode.nix
+    ./zsh.nix
   ];
   programs.home-manager.enable = true;
 
