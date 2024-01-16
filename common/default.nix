@@ -63,9 +63,6 @@
     description = "Coding Club Guest";
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      firefox
-    ];
   };
   programs.zsh.enable = true;
  
