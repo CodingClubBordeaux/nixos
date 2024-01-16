@@ -28,5 +28,13 @@ in
     "org/gnome/desktop/screensaver" = {
       "picture-uri" = "file://" + ../../../assets/wallpaper.jpg;
     };
+    "org/gnome/shell" = {
+      favorite-apps = [
+        "firefox.desktop"
+        "code.desktop"
+        "org.gnome.Console.desktop"
+        "org.gnome.Nautilus.desktop"
+      ];
+    };
   };
 }
