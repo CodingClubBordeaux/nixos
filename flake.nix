@@ -12,19 +12,17 @@
 
   outputs = {self, ...} @ inputs:
     let
-      cfg = {
-        system = "x86_64-linux";
-        config = {
-          allowUnfree = true;
-        };
-      };
-      pkgs = import inputs.nixpkgs cfg;
+      system = "x86_64-linux";
+
       extraArgs = {
-        inherit pkgs;
+        pkgs = import inputs.nixpkgs {
+          inherit system;
+          config = { allowUnfree = true; };
+        };
       };
 
       defaultConfig = inputs.nixpkgs.lib.nixosSystem {
-        system = cfg.system;
+        inherit system;
         specialArgs = extraArgs;
         modules = [
           ./common/default.nix
@@ -37,9 +35,7 @@
       nixosConfigurations = {
         "default" = defaultConfig;
         "java" = (defaultConfig // {
-          modules = defaultConfig.modules ++ [
-            ./env/java/default.nix
-          ];
+          modules = defaultConfig.modules ++ [ ./env/java ];
         });
       };
     };
