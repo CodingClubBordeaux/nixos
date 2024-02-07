@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
-    "/etc/nixos/hardware-configuration.nix"
+    ./hardware-configuration.nix
   ];
   
   home-manager.users.guest = import ./home/guest;
