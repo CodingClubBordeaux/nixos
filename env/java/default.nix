@@ -10,12 +10,12 @@ let
   };
 in
 {
-  environment.systemPackages = with pkgs; [
-    zulu8
-    maven
-  ];
-
   home-manager.users.guest = {
+    packages = with pkgs; [
+      zulu8
+      maven
+    ];
+
     programs.vscode.extensions = [
       VSkript
     ];

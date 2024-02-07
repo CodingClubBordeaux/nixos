@@ -20,23 +20,22 @@
           config = { allowUnfree = true; };
         };
       };
-
-      defaultConfig = inputs.nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = extraArgs;
-        modules = [
-          ./common/default.nix
-          inputs.home-manager.nixosModules.home-manager
-          { home-manager = { extraSpecialArgs = extraArgs; }; }
-        ];
-      };
     in
     {
-      nixosConfigurations = {
-        "default" = defaultConfig;
-        "java" = (defaultConfig // {
-          modules = defaultConfig.modules ++ [ ./env/java ];
-        });
+      nixosConfigurations = rec {
+        default = inputs.nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = extraArgs;
+          modules = [
+            ./common/default.nix
+            inputs.home-manager.nixosModules.home-manager
+            { home-manager = { extraSpecialArgs = extraArgs; }; }
+          ];
+        };
+
+        java = default // {
+          modules = default.modules ++ [ ./env/java ];
+        };
       };
     };
 }
