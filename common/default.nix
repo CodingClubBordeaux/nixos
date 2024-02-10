@@ -2,6 +2,7 @@
 {
   imports = [
     "/etc/nixos/hardware-configuration.nix"
+    ../scripts/post_install_cleanup.nix
   ];
   
   home-manager.users.guest = import ./home/guest;
