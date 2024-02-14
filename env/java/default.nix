@@ -11,7 +11,7 @@ let
 in
 {
   home-manager.users.guest = {
-    packages = with pkgs; [
+    home.packages = with pkgs; [
       zulu8
       maven
     ];
