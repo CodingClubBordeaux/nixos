@@ -25,7 +25,6 @@
 
     programs.vscode.extensions = with pkgs.vscode-extensions; [
       llvm-vs-code-extensions.vscode-clangd
-      usernamehw.errorlens
       vadimcn.vscode-lldb
     ];
   };
