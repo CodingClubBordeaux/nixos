@@ -5,7 +5,7 @@
     enableUpdateCheck = false;
     enableExtensionUpdateCheck = false;
 
-    programs.vscode.extensions = with pkgs.vscode-extensions; [
+    extensions = with pkgs.vscode-extensions; [
       usernamehw.errorlens
     ];
 
