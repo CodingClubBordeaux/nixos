@@ -1,6 +1,13 @@
 { pkgs, ... }:
 let
   username = "guest";
+
+  rebuild = (pkgs.writeShellScriptBin "rebuild" ''
+    exec sudo ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch          \
+      --impure                                                        \
+      --refresh                                                       \
+      --flake github:CodingClubBordeaux/nixos#${"\${1:-\"default\"}"}
+  '');
 in
 {
   imports = [
@@ -15,10 +22,12 @@ in
 
     stateVersion = "23.11";
 
-    packages = with pkgs; [
+    packages = [
+      rebuild
+    ] ++ (with pkgs; [
       neofetch
       firefox
-    ];
+    ]);
   };
 
   dconf.settings = {

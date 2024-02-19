@@ -50,7 +50,10 @@ sudo nixos-rebuild switch --impure --flake github:CodingClubBordeaux/nixos#defau
 
 Open a terminal and run
 ```sh
-sudo nixos-rebuild switch --impure --flake github:CodingClubBordeaux/nixos#default
+rebuild # default config
+rebuild java # java config
+rebuild petit-bain # petit-bain config
+...
 ```
 > Replace `default` by the name of the configuration you want to use (for
 > example `java` or `python`)
