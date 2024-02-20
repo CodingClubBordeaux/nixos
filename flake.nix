@@ -40,6 +40,9 @@
         c = inputs.nixpkgs.lib.nixosSystem (defaultConfig // {
           modules = defaultConfig.modules ++ [ ./env/c ];
         });
+        petit-bain = inputs.nixpkgs.lib.nixosSystem (defaultConfig // {
+          modules = defaultConfig.modules ++ [ ./env/petit-bain ];
+        });
       };
     };
 }
