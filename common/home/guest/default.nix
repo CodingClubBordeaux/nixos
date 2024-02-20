@@ -27,6 +27,8 @@ in
     ] ++ (with pkgs; [
       neofetch
       firefox
+    ]) ++ (with pkgs.gnomeExtensions; [
+      desktop-icons-ng-ding
     ]);
   };
 
@@ -43,6 +45,9 @@ in
         "code.desktop"
         "org.gnome.Console.desktop"
         "org.gnome.Nautilus.desktop"
+      ];
+      enabled-extensions = [
+        "ding@rastersoft.com" # desktop-icons-ng-ding
       ];
     };
   };
