@@ -43,6 +43,9 @@
         petit-bain = inputs.nixpkgs.lib.nixosSystem (defaultConfig // {
           modules = defaultConfig.modules ++ [ ./env/petit-bain ];
         });
+        web = inputs.nixpkgs.lib.nixosSystem (defaultConfig // {
+          modules = defaultConfig.modules ++ [ ./env/web ];
+        });
       };
     };
 }
