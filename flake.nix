@@ -46,6 +46,9 @@
         web = inputs.nixpkgs.lib.nixosSystem (defaultConfig // {
           modules = defaultConfig.modules ++ [ ./env/web ];
         });
+        python = inputs.nixpkgs.lib.nixosSystem (defaultConfig // {
+          modules = defaultConfig.modules ++ [ ./env/python ];
+        });
       };
     };
 }
