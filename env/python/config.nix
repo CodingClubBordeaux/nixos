@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   home-manager.users.guest = {
     home.packages = with pkgs; [
       python311

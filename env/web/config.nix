@@ -1,13 +1,11 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   repo = pkgs.fetchFromGitHub {
     owner = "CodingClubBordeaux";
     repo = "epitech-clicker";
     rev = "89cfbaa8f9a7e500cb06d406ef48d6de63d53648";
     hash = "sha256-nUR4QgrJt/haEd6YfUzo8WyS6P4kmTATaj2R8tS7jVE=";
   };
-in
-{
+in {
   home-manager.users.guest = {
     home.packages = with pkgs; [
       # maybe useful

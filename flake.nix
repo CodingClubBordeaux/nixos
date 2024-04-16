@@ -10,45 +10,49 @@
     };
   };
 
-  outputs = {self, ...} @ inputs:
-    let
-      system = "x86_64-linux";
+  outputs = {self, ...} @ inputs: let
+    system = "x86_64-linux";
 
-      extraArgs = {
-        pkgs = import inputs.nixpkgs {
-          inherit system;
-          config = { allowUnfree = true; };
-        };
-      };
-
-      defaultConfig = {
-          inherit system;
-          specialArgs = extraArgs;
-          modules = [
-            ./common/default.nix
-            inputs.home-manager.nixosModules.home-manager
-            { home-manager = { extraSpecialArgs = extraArgs; }; }
-          ];
-        };
-    in
-    {
-      nixosConfigurations = {
-        default = inputs.nixpkgs.lib.nixosSystem defaultConfig;
-        java = inputs.nixpkgs.lib.nixosSystem (defaultConfig // {
-          modules = defaultConfig.modules ++ [ ./env/java ];
-        });
-        c = inputs.nixpkgs.lib.nixosSystem (defaultConfig // {
-          modules = defaultConfig.modules ++ [ ./env/c ];
-        });
-        petit-bain = inputs.nixpkgs.lib.nixosSystem (defaultConfig // {
-          modules = defaultConfig.modules ++ [ ./env/petit-bain ];
-        });
-        web = inputs.nixpkgs.lib.nixosSystem (defaultConfig // {
-          modules = defaultConfig.modules ++ [ ./env/web ];
-        });
-        python = inputs.nixpkgs.lib.nixosSystem (defaultConfig // {
-          modules = defaultConfig.modules ++ [ ./env/python ];
-        });
+    extraArgs = {
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        config = {allowUnfree = true;};
       };
     };
+
+    defaultConfig = {
+      inherit system;
+      specialArgs = extraArgs;
+      modules = [
+        ./common/default.nix
+        inputs.home-manager.nixosModules.home-manager
+        {home-manager = {extraSpecialArgs = extraArgs;};}
+      ];
+    };
+
+    inherit (inputs.nixpkgs) lib;
+
+    directories = let
+      containsConfig = dir: builtins.hasAttr "config.nix" (builtins.readDir ./env/${dir});
+      isConfig = name: type: type == "directory" && containsConfig name;
+    in
+      builtins.attrNames (lib.filterAttrs isConfig (builtins.readDir ./env));
+  in {
+    formatter.${system} = extraArgs.pkgs.alejandra;
+
+    nixosConfigurations =
+      {
+        default = lib.nixosSystem defaultConfig;
+      }
+      # All the directories in ./env are automatically turned into independants
+      # NixOS configurations
+      // builtins.listToAttrs (builtins.map (dir: {
+          name = dir;
+          value = lib.nixosSystem (defaultConfig
+            // {
+              modules = defaultConfig.modules ++ [./env/${dir}/config.nix];
+            });
+        })
+        directories);
+  };
 }

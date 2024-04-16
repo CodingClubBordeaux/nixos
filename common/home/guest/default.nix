@@ -1,15 +1,13 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   username = "guest";
 
-  rebuild = (pkgs.writeShellScriptBin "rebuild" ''
+  rebuild = pkgs.writeShellScriptBin "rebuild" ''
     exec sudo ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch          \
       --impure                                                        \
       --refresh                                                       \
       --flake github:CodingClubBordeaux/nixos#${"\${1:-\"default\"}"}
-  '');
-in
-{
+  '';
+in {
   imports = [
     ./vscode.nix
     ./zsh.nix
@@ -22,14 +20,17 @@ in
 
     stateVersion = "23.11";
 
-    packages = [
-      rebuild
-    ] ++ (with pkgs; [
-      neofetch
-      firefox
-    ]) ++ (with pkgs.gnomeExtensions; [
-      desktop-icons-ng-ding
-    ]);
+    packages =
+      [
+        rebuild
+      ]
+      ++ (with pkgs; [
+        neofetch
+        firefox
+      ])
+      ++ (with pkgs.gnomeExtensions; [
+        desktop-icons-ng-ding
+      ]);
   };
 
   dconf.settings = {

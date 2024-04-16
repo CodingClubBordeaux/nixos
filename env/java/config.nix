@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   VSkript = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
     mktplcRef = {
       name = "vskript";
@@ -8,8 +7,7 @@ let
       sha256 = "sha256-LV+3B5PnPSfhL8Ii7k+tuuV3vVzdqnk6PRic9NL/TUw=";
     };
   };
-in
-{
+in {
   home-manager.users.guest = {
     home.packages = with pkgs; [
       zulu8

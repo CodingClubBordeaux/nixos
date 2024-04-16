@@ -1,23 +1,22 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   imports = [
     "/etc/nixos/hardware-configuration.nix"
   ];
-  
+
   home-manager.users.guest = import ./home/guest;
   home-manager.useGlobalPkgs = true;
- 
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
- 
+
   networking.hostName = "nixos";
- 
+
   networking.networkmanager.enable = true;
- 
+
   time.timeZone = "Europe/Paris";
- 
+
   i18n.defaultLocale = "en_US.UTF-8";
- 
+
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "fr_FR.UTF-8";
     LC_IDENTIFICATION = "fr_FR.UTF-8";
@@ -31,20 +30,19 @@
   };
 
   services.xserver.enable = true;
- 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
- 
- 
+
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+
   services.xserver = {
     layout = "fr";
     xkbVariant = "";
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
   };
-  environment.gnome.excludePackages = [ pkgs.gnome-tour ];
- 
+  environment.gnome.excludePackages = [pkgs.gnome-tour];
+
   console.keyMap = "fr";
- 
+
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -54,19 +52,19 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
- 
+
   users.users.guest = {
     createHome = true;
     isNormalUser = true;
     initialPassword = "Epitech1!";
     description = "Coding Club Guest";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
   };
   programs.zsh.enable = true;
- 
+
   nixpkgs.config.allowUnfree = true;
- 
+
   environment.systemPackages = with pkgs; [
     vim
     git
@@ -74,7 +72,7 @@
     wget
     curl
   ];
- 
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
