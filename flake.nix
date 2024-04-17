@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs_unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
@@ -11,17 +12,24 @@
   };
 
   outputs = {self, ...} @ inputs: let
-    system = "x86_64-linux";
+    cfg = {
+      system = "x86_64-linux";
+      config.allowUnfree = true;
+    };
+
+    pkgs = import inputs.nixpkgs (cfg
+      // {
+        overlays = [
+          (_: _: {unstable = import inputs.nixpkgs_unstable cfg;})
+        ];
+      });
 
     extraArgs = {
-      pkgs = import inputs.nixpkgs {
-        inherit system;
-        config = {allowUnfree = true;};
-      };
+      inherit pkgs;
     };
 
     defaultConfig = {
-      inherit system;
+      inherit (cfg) system;
       specialArgs = extraArgs;
       modules = [
         ./common/default.nix
@@ -38,7 +46,7 @@
     in
       builtins.attrNames (lib.filterAttrs isConfig (builtins.readDir ./env));
   in {
-    formatter.${system} = extraArgs.pkgs.alejandra;
+    formatter.${cfg.system} = extraArgs.pkgs.alejandra;
 
     nixosConfigurations =
       {
