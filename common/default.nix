@@ -78,6 +78,9 @@
     cores = 4; # CPU cores
   };
 
+  networking.firewall.allowedUDPPorts = [6969];
+  networking.firewall.allowedTCPPorts = [6969];
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
