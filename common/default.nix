@@ -73,6 +73,11 @@
     curl
   ];
 
+  virtualisation.vmVariant.virtualisation = {
+    memorySize = 4096; # MiB RAM
+    cores = 4; # CPU cores
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
