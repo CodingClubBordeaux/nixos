@@ -11,6 +11,7 @@ in {
   imports = [
     ./vscode.nix
     ./zsh.nix
+    ./minecraft.nix
   ];
   programs.home-manager.enable = true;
 
