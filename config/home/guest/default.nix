@@ -26,8 +26,52 @@ in {
         rebuild
       ]
       ++ (with pkgs; [
+        # softs
         neofetch
         firefox
+        libreoffice
+        android-studio
+
+        # c dev tools
+        gcc13
+        gnumake
+        gcovr
+        ltrace
+        valgrind
+        python311Packages.compiledb
+        gdb
+        glibc
+
+        # java
+        zulu8
+        maven
+
+        # clang tools
+        clang-analyzer
+        clang-tools_17
+
+        # dev
+        rustup
+        nodejs_22
+        corepack_22
+        typescript
+        deno
+
+        # mobile
+        flutter
+
+        # python
+        python311
+        python311.pkgs.pillow
+        python311.pkgs.pygame
+        nodePackages.pyright
+        pyxel
+
+        # man pages
+        man-pages
+        man-pages-posix
+        stdman
+        linux-manual
       ])
       ++ (with pkgs.gnomeExtensions; [
         desktop-icons-ng-ding

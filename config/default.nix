@@ -34,8 +34,8 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   services.xserver = {
-    layout = "fr";
-    xkbVariant = "";
+    xkb.layout = "fr";
+    xkb.variant = "";
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
   };

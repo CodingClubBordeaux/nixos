@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   home.packages = [
     # Prism but with java 21
-    (pkgs.prismlauncher.override { jdks = [ pkgs.temurin-bin-21 pkgs.temurin-bin-8 pkgs.temurin-bin-17 ]; })
+    (pkgs.prismlauncher.override {jdks = [pkgs.temurin-bin-21 pkgs.temurin-bin-8 pkgs.temurin-bin-17];})
   ];
 
   # Add a offline account to prism
