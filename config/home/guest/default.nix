@@ -30,7 +30,7 @@ in {
         neofetch
         firefox
         libreoffice
-        android-studio
+        arduino
 
         # c dev tools
         gcc13
@@ -56,9 +56,6 @@ in {
         corepack_22
         typescript
         deno
-
-        # mobile
-        flutter
 
         # python
         python311
