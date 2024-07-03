@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{pkgs, gnomeExtensions, lib, ...}: let
   username = "guest";
 
   rebuild = pkgs.writeShellScriptBin "rebuild" ''
@@ -82,6 +82,9 @@ in {
     "org/gnome/desktop/screensaver" = {
       "picture-uri" = "file://" + ../../../assets/wallpaper.jpg;
     };
+    "org.gnome.desktop.peripherals.touchpad" = {
+      tap-to-click = true;
+    };
     "org/gnome/shell" = {
       favorite-apps = [
         "firefox.desktop"
@@ -89,9 +92,7 @@ in {
         "org.gnome.Console.desktop"
         "org.gnome.Nautilus.desktop"
       ];
-      enabled-extensions = [
-        "ding@rastersoft.com" # desktop-icons-ng-ding
-      ];
+      enabled-extensions = map (e: e.extensionUuid) gnomeExtensions;
     };
   };
 }

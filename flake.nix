@@ -26,6 +26,11 @@
 
     extraArgs = {
       inherit pkgs;
+      gnomeExtensions = with pkgs.gnomeExtensions; [
+        blur-my-shell
+        tiling-assistant
+        caffeine
+      ];
     };
 
     inherit (inputs.nixpkgs) lib;

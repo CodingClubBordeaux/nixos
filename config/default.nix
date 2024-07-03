@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  gnomeExtensions,
+  ...
+}: {
   imports = [
     "/etc/nixos/hardware-configuration.nix"
   ];
@@ -33,9 +37,22 @@
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
+  # https://wiki.nixos.org/wiki/GNOME#Automatic_login
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
+  services.displayManager = {
+    autoLogin = {
+      enable = true;
+      user = "guest";
+    };
+    defaultSession = "gnome";
+  };
+
   services.xserver = {
-    xkb.layout = "fr";
-    xkb.variant = "";
+    xkb = {
+      layout = "fr";
+      variant = "";
+    };
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
   };
@@ -65,13 +82,15 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-    tree
-    wget
-    curl
-  ];
+  environment.systemPackages =
+    (with pkgs; [
+      vim
+      git
+      tree
+      wget
+      curl
+    ])
+    ++ gnomeExtensions;
 
   virtualisation.vmVariant.virtualisation = {
     memorySize = 4096; # MiB RAM
