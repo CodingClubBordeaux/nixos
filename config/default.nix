@@ -70,13 +70,21 @@
     pulse.enable = true;
   };
 
-  users.users.guest = {
-    createHome = true;
-    isNormalUser = true;
-    initialPassword = "Epitech1!";
-    description = "Coding Club Guest";
-    shell = pkgs.zsh;
-    extraGroups = ["networkmanager" "wheel"];
+  users = {
+    users = {
+      root.password = "Epitech1!";
+
+      guest = {
+        createHome = true;
+        isNormalUser = true;
+        initialPassword = "";
+        description = "Coding Club Guest";
+        shell = pkgs.zsh;
+        extraGroups = ["networkmanager" "wheel"];
+      };
+    };
+
+    mutableUsers = false;
   };
   programs.zsh.enable = true;
 
@@ -95,6 +103,12 @@
   virtualisation.vmVariant.virtualisation = {
     memorySize = 4096; # MiB RAM
     cores = 4; # CPU cores
+  };
+
+  security.sudo = {
+    extraConfig = ''
+      Defaults targetpw
+    '';
   };
 
   networking.firewall.allowedUDPPorts = [6969];
