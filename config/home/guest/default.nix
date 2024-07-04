@@ -1,4 +1,4 @@
-{pkgs, gnomeExtensions, lib, ...}: let
+{pkgs, gnomeExtensions, ...}: let
   username = "guest";
 
   rebuild = pkgs.writeShellScriptBin "rebuild" ''
@@ -12,6 +12,7 @@ in {
     ./vscode.nix
     ./zsh.nix
     ./minecraft.nix
+    ./firefox.nix
   ];
   programs.home-manager.enable = true;
 
@@ -28,7 +29,6 @@ in {
       ++ (with pkgs; [
         # softs
         neofetch
-        firefox
         libreoffice
         arduino
 
