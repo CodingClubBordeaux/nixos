@@ -1,4 +1,5 @@
-{pkgs, gnomeExtensions, ...}: let
+{ pkgs, gnomeExtensions, ... }:
+let
   username = "guest";
 
   rebuild = pkgs.writeShellScriptBin "rebuild" ''
@@ -7,7 +8,8 @@
       --refresh                                                       \
       --flake github:CodingClubBordeaux/nixos#${"\${1:-\"default\"}"}
   '';
-in {
+in
+{
   imports = [
     ./vscode.nix
     ./zsh.nix
@@ -20,12 +22,12 @@ in {
     inherit username;
     homeDirectory = "/home/${username}";
 
+    sessionVariables.LD_LIBRARY_PATH = "$LD_LIBRARY_PATH:${pkgs.lib.makeLibraryPath [ pkgs.SDL2 ]}";
+
     stateVersion = "23.11";
 
     packages =
-      [
-        rebuild
-      ]
+      [ rebuild ]
       ++ (with pkgs; [
         # softs
         neofetch
@@ -62,17 +64,16 @@ in {
         python311.pkgs.pillow
         python311.pkgs.pygame
         nodePackages.pyright
-        pyxel
 
         # man pages
         man-pages
         man-pages-posix
         stdman
         linux-manual
+
+        SDL2
       ])
-      ++ (with pkgs.gnomeExtensions; [
-        desktop-icons-ng-ding
-      ]);
+      ++ (with pkgs.gnomeExtensions; [ desktop-icons-ng-ding ]);
   };
 
   dconf.settings = {
