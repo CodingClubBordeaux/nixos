@@ -33,6 +33,8 @@ in
         neofetch
         libreoffice
         arduino
+        tic-80
+        lua
 
         # c dev tools
         gcc13
