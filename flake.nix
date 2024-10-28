@@ -17,12 +17,9 @@
       config.allowUnfree = true;
     };
 
-    pkgs = import inputs.nixpkgs (cfg
-      // {
-        overlays = [
-          (_: _: {unstable = import inputs.nixpkgs_unstable cfg;})
-        ];
-      });
+    pkgs = import inputs.nixpkgs (
+      cfg // {overlays = [(_: _: {unstable = import inputs.nixpkgs_unstable cfg;})];}
+    );
 
     extraArgs = {
       inherit pkgs;
@@ -30,6 +27,7 @@
         blur-my-shell
         tiling-assistant
         caffeine
+        desktop-icons-ng-ding
       ];
     };
 
@@ -37,14 +35,20 @@
   in {
     formatter.${cfg.system} = extraArgs.pkgs.alejandra;
 
-    nixosConfigurations = {
-      default = lib.nixosSystem {
+    nixosConfigurations = rec {
+      default = nixos;
+      nixos = lib.nixosSystem {
         inherit (cfg) system;
         specialArgs = extraArgs;
         modules = [
           ./config/default.nix
           inputs.home-manager.nixosModules.home-manager
-          {home-manager = {extraSpecialArgs = extraArgs;};}
+          {
+            home-manager = {
+              extraSpecialArgs = extraArgs;
+              backupFileExtension = "backup";
+            };
+          }
         ];
       };
     };
