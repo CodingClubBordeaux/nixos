@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   VSkript = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
     mktplcRef = {
       name = "vskript";
@@ -7,25 +8,34 @@
       sha256 = "sha256-LV+3B5PnPSfhL8Ii7k+tuuV3vVzdqnk6PRic9NL/TUw=";
     };
   };
-in {
+in
+{
   programs.vscode = {
     enable = true;
     enableUpdateCheck = false;
     enableExtensionUpdateCheck = false;
 
-    extensions = with pkgs.vscode-extensions;
-      [
+    extensions =
+      (with pkgs.vscode-extensions; [
         usernamehw.errorlens
+
+        # c/c++
         llvm-vs-code-extensions.vscode-clangd
         vadimcn.vscode-lldb
-        ms-pyright.pyright
+
+        # python
+        ms-python.python
+        ms-python.vscode-pylance
+        ms-python.isort
+        ms-python.debugpy
+        ms-python.black-formatter
 
         # web
         ritwickdey.liveserver
         ms-vscode.live-server
         gencer.html-slim-scss-css-class-completion
-      ]
-      ++ [VSkript];
+      ])
+      ++ [ VSkript ];
 
     userSettings = {
       "files.autoSave" = "afterDelay";

@@ -37,6 +37,11 @@
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
+  services.openssh = {
+    enable = true;
+    settings.PermitRootLogin = "yes";
+  };
+
   # https://wiki.nixos.org/wiki/GNOME#Automatic_login
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
@@ -104,6 +109,8 @@
     memorySize = 4096; # MiB RAM
     cores = 4; # CPU cores
   };
+
+  nix.settings.trusted-users = [ "@wheel" ]; # rebuild over ssh
 
   security.sudo = {
     extraConfig = ''
