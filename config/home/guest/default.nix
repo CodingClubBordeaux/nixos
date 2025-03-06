@@ -45,6 +45,7 @@ in {
         ltrace
         valgrind
         python311Packages.compiledb
+        python311Packages.pygame
         gdb
         glibc
 
