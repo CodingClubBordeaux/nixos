@@ -77,6 +77,7 @@ in {
         linux-manual
 
         SDL2
+	google-chrome
       ]);
   };
 
